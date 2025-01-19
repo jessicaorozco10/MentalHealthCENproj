@@ -1,0 +1,9 @@
+<div class="seedstarterlist" th:unless="${#lists.isEmpty(allTypes)}">
+
+    <div>
+        <p th:each="a : ${allTypes}">
+            <span th:text="${a}"></span>
+        </p>
+    </div>
+
+</div>
