@@ -5,6 +5,13 @@ body {
     padding: 0;
 }
 
+.footer {
+  background-color: #F1F1F1;
+  text-align: center;
+  margin-top: 540px;
+  padding: 10px;
+}
+
 .container {
     margin-top: 20px;
 }
