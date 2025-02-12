@@ -5,11 +5,19 @@ body {
     padding: 0;
 }
 
+h2 {
+    color: #2c3e50;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
 .footer {
-  background-color: #F1F1F1;
-  text-align: center;
-  margin-top: 540px;
-  padding: 10px;
+    background-color: #F1F1F1;
+    text-align: center;
+    margin-top: 540px;
+    padding: 10px;
 }
 
 .container {
@@ -19,3 +27,4 @@ body {
 .btn {
     margin-top: 10px;
 }
+
