@@ -35,4 +35,9 @@ public class UserServiceImpl implements SecurityAdminService {
     public void logSecurityEvent(String eventDetails) {
 
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
 }
