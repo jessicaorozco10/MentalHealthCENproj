@@ -1,19 +1,27 @@
 package com.example.CENProj.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping(path = "user")
 public class UserController {
+
     @GetMapping("/")
     public String Test() {
         return "Hello User";
     }
-    @GetMapping("/Login")
-    public boolean Login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
+
+    @GetMapping("/login")
+    public String Login(){
+        return "user/login";
+    }
+
+    @PostMapping("/verifylogin")
+    public boolean VerifyLogin(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password){
         return true;
     }
 }
