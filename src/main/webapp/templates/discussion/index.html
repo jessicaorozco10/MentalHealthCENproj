@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{header :: head(title='Community-Forums')}"> </head>
+<body>
+<!-- Header / Navigation bar -->
+<div th:insert="~{header :: header-body}">
+</div>
+
+<div class="container">
+  <h2></br></br>Community Forums</br></br></h2>
+  <p>Connect with others, share experiences, and discuss mental health topics.</p>
+  <img src="../images/flowerpic.png" alt="forums picture" style="display: block; margin: auto; width: 40%;">
+  </br></br>
+
+  <form>
+    <label for="post">Create a Post:</label>
+    <textarea id="post" class="form-control" placeholder="Share your thoughts..."></textarea>
+    <br>
+    <button type="submit" class="btn btn-primary">Post</button>
+  </form>
+
+  <hr>
+
+  <h3>Recent Discussions</h3>
+  <ul>
+    <li><strong>Alice:</strong> How do you manage anxiety?</li>
+    <li><strong>Bob:</strong> Meditation has really helped me.</li>
+    <li><strong>Charlie:</strong> Looking for a good therapist, any recommendations?</li>
+  </ul>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>Digital Mental Health Platform - 2025</p>
+  <p style="font-weight: bold; font-style: italic;">If you are in crisis, having suicidal thoughts, or attempting suicide, contact emergency resources immediately.</p>
+</div>
+
+<!-- Bootstrap CSS and javascript bundles -->
+</body>
+</html>

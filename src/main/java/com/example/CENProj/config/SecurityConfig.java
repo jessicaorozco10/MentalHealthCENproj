@@ -2,30 +2,22 @@ package com.example.CENProj.config;
 
 import com.example.CENProj.service.UserDetailsServiceImpl;
 import com.example.CENProj.service.UserServiceImpl;
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
-
-import java.util.LinkedList;
 
 @Configuration
 @EnableWebSecurity
@@ -38,28 +30,34 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
+                        .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.FORWARD, DispatcherType.INCLUDE, DispatcherType.ERROR).permitAll()
                         .requestMatchers("/about-us").authenticated()
+                        .requestMatchers("/user/*").authenticated()
                         .anyRequest().permitAll()
-
-                )
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(form -> {
+                ).formLogin(form -> {
                     form.loginPage("/user/login").permitAll();
-                    form.successHandler(sessionAuth());
+                    form.loginProcessingUrl("/login").permitAll();
+                    form.failureUrl("/user/login?error").permitAll();
                 })
-                .addFilter(new UsernamePasswordAuthenticationFilter(authenticationManager()))
-                .securityContext((secContext) -> {
-                    secContext.securityContextRepository(new RequestAttributeSecurityContextRepository());
-                });
+                .authenticationManager(authenticationManager());
         return http.build();
     }
 
+    @Autowired
+    public void configure(AuthenticationManagerBuilder builder) {
+        builder.eraseCredentials(false);
+    }
+
+    // Use custom auth manager with custom password encoder and userdetails service for fetching user credentials for login flow
     @Bean
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return new ProviderManager(authenticationProvider);
+
+        ProviderManager authenticationManager = new ProviderManager(authenticationProvider);
+        authenticationManager.setEraseCredentialsAfterAuthentication(false);
+        return authenticationManager;
     }
 
     @Bean
@@ -67,13 +65,10 @@ public class SecurityConfig {
         return new UserDetailsServiceImpl(userService);
     }
 
+    // Use Bcrypt for password encoding/decoding for login flow
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationSuccessHandler sessionAuth() {
-        return new AuthenticationSuccessHandlerImpl();
-    }
 }
