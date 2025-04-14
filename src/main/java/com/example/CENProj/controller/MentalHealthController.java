@@ -1,9 +1,16 @@
 package com.example.CENProj.controller;
 
+import com.example.CENProj.model.Dto.UserDto;
+import com.example.CENProj.model.User;
+import com.example.CENProj.service.UserServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,13 +18,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Controller
-public class SeedStarterMngController {
-    @ModelAttribute("allTypes")
-    public List<String> populateTypes() {
-        List<String> test = new LinkedList<>();
-        test.add("Hello");
-        test.add("yes");
-        return test;
+@RequiredArgsConstructor
+public class MentalHealthController {
+
+    private final UserServiceImpl userService;
+
+    @ModelAttribute("loggedInUser")
+    public User populateTypes() {
+        try {
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            Authentication authentication = securityContext.getAuthentication();
+            UserDto userDto = (UserDto) authentication.getPrincipal();
+            return userDto.getUser();
+        } catch (Exception ignored) {}
+        return null;
     }
 
     @RequestMapping({"/","/seedstartermng"})
@@ -35,18 +49,8 @@ public class SeedStarterMngController {
     }
 
     @RequestMapping("/about-us")
-    public String showAboutUs() {
+    public String showAboutUs(Model model) {
         return "about-us";
-    }
-
-    @RequestMapping("/community-forums")
-    public String showCommunityForums() {
-        return "community-forums";
-    }
-
-    @RequestMapping("/account")
-    public String showAccount() {
-        return "account";
     }
 
     @RequestMapping("/find-therapists")

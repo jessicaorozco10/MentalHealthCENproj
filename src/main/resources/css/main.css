@@ -13,6 +13,11 @@ button:hover {
     background-color: #2980b9;
 }
 
+td i:hover {
+    cursor: pointer;
+    color: white;
+}
+
 .footer {
     background-color: #F1F1F1;
     text-align: center;
