@@ -1,4 +1,4 @@
-package com.example.CENProj.model;
+package com.example.CENProj.model.ViewModel;
 
 import lombok.Data;
 
