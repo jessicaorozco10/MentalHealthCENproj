@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head th:insert="~{header :: head(title=Find-Therapists)}"> </head>
 <body>
     <!-- Header / Navigation bar -->
@@ -8,19 +8,89 @@
 
     <div class="container">
         <h2></br></br>Find a Therapist</br></br></h2>
-        <form>
-            <label for="location">Location:</label>
-            <input type="text" id="location" placeholder="Enter city">
+        <form class="form" id="findTherapistForm" th:action="@{/therapist/find}" method="post">
+            <label class="form-label" for="name">Name:</label>
+            <input class="form-control" type="text" id="name" name="name" placeholder="Enter Therapist Name">
 
-            <label for="specialization">Specialization:</label>
-            <select id="specialization">
-                <option>Anxiety</option>
-                <option>Depression</option>
-                <option>Trauma</option>
+            <label class="form-label" for="specialization">Specialization:</label>
+            <select class="form-select" id="specialization" name="specialization" form="findTherapistForm">
+                <option value="Psychologist">Psychologist</option>
+                <option value="Psychiatrist">Psychiatrist</option>
+                <option value="Marriage/Family Therapy">Marriage/Family Therapy</option>
+                <option value="Mental Health Counselor">Mental Health Counselor</option>
             </select>
 
-            <button type="submit">Search</button>
+            <label class="form-label">Availability:</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="MONDAY" id="monday">
+                <label class="form-check-label" for="monday">
+                    Monday
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="TUESDAY" id="tuesday">
+                <label class="form-check-label" for="tuesday">
+                    Tuesday
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="WEDNESDAY" id="wednesday">
+                <label class="form-check-label" for="wednesday">
+                    Wednesday
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="THURSDAY" id="thursday">
+                <label class="form-check-label" for="thursday">
+                    Thursday
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="FRIDAY" id="friday">
+                <label class="form-check-label" for="friday">
+                    Friday
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="SATURDAY" id="saturday">
+                <label class="form-check-label" for="saturday">
+                    Saturday
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="SUNDAY" id="sunday">
+                <label class="form-check-label" for="sunday">
+                    Sunday
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Search</button>
         </form>
+
+        <div th:if="${not #lists.isEmpty(therapists)}">
+            <table class="table table-striped table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Specialization</th>
+                    <th scope="col">License Information</th>
+                    <th scope="col">Experience</th>
+                    <th scope="col">Availability</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="therapistView : ${therapists}">
+                    <th scope="row" th:text="${therapistView.therapist.user.firstName}"></th>
+                    <td th:text="${therapistView.therapist.user.lastName}"></td>
+                    <td th:text="${therapistView.therapist.specialization}"></td>
+                    <td th:text="${therapistView.therapist.licenseInfo}"></td>
+                    <td th:text="${therapistView.therapist.experience}"></td>
+                    <td th:text="${therapistView.therapistAvailability}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Footer -->
