@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{header :: head(title='Edit User')}"> </head>
+<body>
+  <!-- Header / Navigation bar -->
+  <div th:insert="~{header :: header-body}"></div>
+  <nav style="--bs-breadcrumb-divider: '>'; margin-left: 3em;" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/user/account">Account</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Edit</li>
+    </ol>
+  </nav>
+  <div class="container">
+    <h2>Edit User</h2>
+    <form style="margin-bottom: 20px; padding: 10px; border: 1px solid black; border-radius: 5px;" id="editUserForm" class="form"
+          method="post" th:action="@{/user/edit}">
+      <div>
+        <label class="form-label" for="firstname">First Name</label>
+        <input class="form-control" id="firstname" name="firstname" th:value="${user.firstName}">
+      </div>
+      <div>
+        <label class="form-label" for="lastname">LastName</label>
+        <input class="form-control" id="lastname" name="lastname" th:value="${user.lastName}">
+      </div>
+      <div>
+        <label class="form-label" for="email">Email</label>
+        <input class="form-control" id="email" name="email" th:value="${user.email}">
+      </div>
+      <div>
+        <label class="form-label">User Type</label>
+        <select th:disabled="${user.userType.name != 'ADMIN'}" th:name="userType" class="form-select" aria-label="User Type" name="userType" form="editUserForm" required>
+          <option th:selected="${user.userType.name == 'REGULAR_USER'}" value="REGULAR_USER">Regular User</option>
+          <option th:selected="${user.userType.name == 'ADMIN'}" value="ADMIN">Admin</option>
+          <option th:selected="${user.userType.name == 'THERAPIST'}" value="THERAPIST">Therapist</option>
+        </select>
+      </div>
+      <input hidden="hidden" th:value="${user.id}" name="id" id="userId">
+      <button type="submit" class="btn btn-primary" style="background-color: #3498db; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Edit User</button>
+    </form>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:insert="~{header :: head(title=Find-Therapists)}"> </head>
+<body>
+    <!-- Header / Navigation bar -->
+    <div th:insert="~{header :: header-body}">
+    </div>
+
+    <div class="container">
+        <h2></br></br>Find a Therapist</br></br></h2>
+        <form>
+            <label for="location">Location:</label>
+            <input type="text" id="location" placeholder="Enter city">
+
+            <label for="specialization">Specialization:</label>
+            <select id="specialization">
+                <option>Anxiety</option>
+                <option>Depression</option>
+                <option>Trauma</option>
+            </select>
+
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Digital Mental Health Platform - 2025</p>
+        <p style="font-weight: bold; font-style: italic;">If you are in crisis, having suicidal thoughts, or attempting suicide, contact emergency resources immediately.</p>
+    </div>
+
+    <!-- Bootstrap CSS and javascript bundles -->
+</body>
+</html>
