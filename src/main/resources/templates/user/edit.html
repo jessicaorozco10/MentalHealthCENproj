@@ -16,19 +16,19 @@
           method="post" th:action="@{/user/edit}">
       <div>
         <label class="form-label" for="firstname">First Name</label>
-        <input class="form-control" id="firstname" name="firstname" th:value="${user.firstName}">
+        <input class="form-control" id="firstname" name="firstname" type="text" th:value="${user.firstName}" required>
       </div>
       <div>
         <label class="form-label" for="lastname">LastName</label>
-        <input class="form-control" id="lastname" name="lastname" th:value="${user.lastName}">
+        <input class="form-control" id="lastname" name="lastname" th:value="${user.lastName}" type="text" required>
       </div>
       <div>
         <label class="form-label" for="email">Email</label>
-        <input class="form-control" id="email" name="email" th:value="${user.email}">
+        <input class="form-control" id="email" name="email" th:value="${user.email}" type="email" required>
       </div>
       <div>
         <label class="form-label">User Type</label>
-        <select th:disabled="${user.userType.name != 'ADMIN'}" th:name="userType" class="form-select" aria-label="User Type" name="userType" form="editUserForm" required>
+        <select th:disabled="${loggedInUser.userType.name != 'ADMIN'}" th:name="userType" class="form-select" aria-label="User Type" name="userType" form="editUserForm" required>
           <option th:selected="${user.userType.name == 'REGULAR_USER'}" value="REGULAR_USER">Regular User</option>
           <option th:selected="${user.userType.name == 'ADMIN'}" value="ADMIN">Admin</option>
           <option th:selected="${user.userType.name == 'THERAPIST'}" value="THERAPIST">Therapist</option>

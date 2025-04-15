@@ -9,6 +9,7 @@ import com.example.CENProj.service.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,6 +98,17 @@ public class UserController {
             return "redirect:/user/account";
         }
         model.addAttribute("user", user.get());
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        UserDto userDtoOld = (UserDto) authentication.getPrincipal();
+        if(id == userDtoOld.getUser().getId()) {
+            UserDto userDto = new UserDto(user.get().getEmail(), user.get().getPassword(), new LinkedList<>());
+            userDto.setUser(user.get());
+            Authentication authenticationNew = new UsernamePasswordAuthenticationToken(userDto, userDto.getPassword(), userDto.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authenticationNew);
+            model.addAttribute("loggedInUser", userDto.getUser());
+        }
+
         return "user/edit";
     }
 

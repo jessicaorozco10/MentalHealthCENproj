@@ -12,9 +12,12 @@
   <img src="../images/flowerpic.png" alt="forums picture" style="display: block; margin: auto; width: 40%;">
   </br></br>
 
-  <form>
-    <label for="post">Create a Post:</label>
-    <textarea id="post" class="form-control" placeholder="Share your thoughts..."></textarea>
+  <form id="createPostForm" class="form" th:action="@{/discussion/}" method="post">
+    <h2>Create a new post</h2>
+    <label for="title" class="form-label">Title:</label>
+    <input id="title" class="form-control" name="title" required/>
+    <label for="post" class="form-label">Content: </label>
+    <textarea id="post" class="form-control" name="content" placeholder="Share your thoughts..." required></textarea>
     <br>
     <button type="submit" class="btn btn-primary">Post</button>
   </form>
@@ -22,11 +25,22 @@
   <hr>
 
   <h3>Recent Discussions</h3>
-  <ul>
-    <li><strong>Alice:</strong> How do you manage anxiety?</li>
-    <li><strong>Bob:</strong> Meditation has really helped me.</li>
-    <li><strong>Charlie:</strong> Looking for a good therapist, any recommendations?</li>
-  </ul>
+  <table class="table table-striped table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Title</th>
+        <th scope="col">Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="discussion : ${discussions}">
+        <th scope="row"><a style="text-decoration: none; color: white;" th:text="${discussion.createdByUser.email}" th:href="@{/discussion/view/{id}/(id=${discussion.id})}"></a></th>
+        <td><a style="text-decoration: none; color: white;" th:text="${discussion.title}" th:href="@{/discussion/view/{id}/(id=${discussion.id})}"></a></td>
+        <td><a style="text-decoration: none; color: white;" th:text="${#temporals.format(discussion.createdDate, 'MM-dd-yyyy hh:mm a')}" th:href="@{/discussion/view/{id}/(id=${discussion.id})}"></a></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <!-- Footer -->
