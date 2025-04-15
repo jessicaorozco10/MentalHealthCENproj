@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:insert="~{header :: head(title='View')}"> </head>
+<body>
+<!-- Header / Navigation bar -->
+<div th:insert="~{header :: header-body}">
+</div>
+
+<div class="container">
+
+  <div class="card" style="width: 100%">
+    <div class="card-body">
+      <div class="row-apart">
+        <h5 class="card-title" th:text="${discussion.title}"></h5>
+        <h6 class="card-title" th:text="${discussion.createdByUser.email} + ' ' + ${#temporals.format(discussion.createdDate, 'MM-dd-yyyy hh:mm a')}"></h6>
+      </div>
+
+      <p class="card-text" th:text="${discussion.content}"></p>
+    </div>
+  </div>
+
+  <form class="form" th:action="@{/discussion/comment/}" method="post" style="max-width: 500px">
+    <label class="form-label" for="comment">Comment</label>
+    <textarea id="comment" name="comment" class="form-control" required></textarea>
+    <input id="id" name="id" th:value="${discussion.id}" th:hidden="true"/>
+    <button class="btn btn-primary">Comment</button>
+  </form>
+
+  <h2 style="margin-top: 3em;">Comments</h2>
+  <hr>
+  <div th:each="comment : ${discussion.comments}">
+    <div class="card"  style="max-width: 700px">
+      <div class="card-body">
+        <div class="row-apart">
+          <h5 class="card-title" th:text="${comment.createdByUser.email}"></h5>
+          <h6 class="card-title" th:text="${#temporals.format(comment.createdDate, 'MM-dd-yyyy hh:mm a')}"></h6>
+        </div>
+
+        <p class="card-text" th:text="${comment.content}"></p>
+      </div>
+    </div>
+    <hr>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>Digital Mental Health Platform - 2025</p>
+  <p style="font-weight: bold; font-style: italic;">If you are in crisis, having suicidal thoughts, or attempting suicide, contact emergency resources immediately.</p>
+</div>
+
+</body>
+</html>

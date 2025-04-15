@@ -31,4 +31,8 @@ public class User {
     @ManyToMany
     @JoinTable(name = "user_roles")
     private List<Role> roles;
+    @OneToMany(mappedBy = "createdByUser")
+    private List<Discussion> discussions;
+    @OneToMany(mappedBy = "createdByUser")
+    private List<DiscussionComment> discussionComments;
 }

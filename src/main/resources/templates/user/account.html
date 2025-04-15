@@ -31,7 +31,10 @@
                     <td th:text="${loggedInUser.email}"></td>
                     <td th:text="${loggedInUser.userType.name}"></td>
                     <td th:text="${loggedInUser.publicationDate}"></td>
-                    <td><button class="btn btn-danger"><a href="/user/logout" style="text-decoration: none; color: white;">Logout</a></button></td>
+                    <td>
+                        <a class="btn" th:href="'/user/edit?id=' + ${loggedInUser.id}" style="margin-right: .5em; padding: 0;color: white"> <i class="bi bi-pen"></i> </a>
+                        <button class="btn btn-danger"><a href="/user/logout" style="text-decoration: none; color: white;">Logout</a></button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

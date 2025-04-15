@@ -6,8 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,24 +14,23 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Discussions")
-public class Discussion {
+@Table(name = "DiscussionComments")
+public class DiscussionComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String title;
     private String content;
+    private LocalDateTime createdDate;
+    @ManyToOne
+    @JoinColumn(name="discussion_id", nullable=false)
+    private Discussion discussion;
     @ManyToOne
     @JoinColumn(name="created_by_user_id", nullable=false)
     private User createdByUser;
-    private LocalDateTime createdDate;
-    @OneToMany(mappedBy="discussion")
-    private List<DiscussionComment> comments;
 }

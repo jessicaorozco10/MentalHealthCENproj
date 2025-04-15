@@ -13,11 +13,19 @@ button:hover {
     background-color: #2980b9;
 }
 
+.row-apart {
+    display: flex;
+    justify-content: space-between;
+}
+
 td i:hover {
     cursor: pointer;
     color: white;
 }
 
+.table-hover:hover {
+    cursor: pointer;
+}
 .footer {
     background-color: #F1F1F1;
     text-align: center;
