@@ -14,9 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.LinkedList;
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 public class MentalHealthController {

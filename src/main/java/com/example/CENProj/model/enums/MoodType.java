@@ -1,3 +1,5 @@
-public class MoodType {
+package com.example.CENProj.model.enums;
+
+public enum MoodType {
 
 }
