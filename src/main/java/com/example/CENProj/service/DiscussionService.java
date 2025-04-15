@@ -1,6 +1,5 @@
 package com.example.CENProj.service;
 
-import com.example.CENProj.model.Comment;
 import com.example.CENProj.model.Discussion;
 import com.example.CENProj.model.DiscussionComment;
 import com.example.CENProj.model.User;
@@ -9,7 +8,6 @@ import com.example.CENProj.repository.DiscussionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

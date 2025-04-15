@@ -1,9 +1,9 @@
 package com.example.CENProj.controller;
 
-import com.example.CENProj.model.ViewModel.BaseViewModel;
 import com.example.CENProj.model.Dto.UserCreatedDto;
 import com.example.CENProj.model.Dto.UserDto;
 import com.example.CENProj.model.User;
+import com.example.CENProj.model.ViewModel.BaseViewModel;
 import com.example.CENProj.model.enums.UserType;
 import com.example.CENProj.service.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;

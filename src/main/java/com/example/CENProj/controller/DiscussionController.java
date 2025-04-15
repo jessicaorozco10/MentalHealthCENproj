@@ -3,7 +3,6 @@ package com.example.CENProj.controller;
 import com.example.CENProj.model.Discussion;
 import com.example.CENProj.model.Dto.UserDto;
 import com.example.CENProj.model.User;
-import com.example.CENProj.repository.DiscussionRepository;
 import com.example.CENProj.service.DiscussionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
