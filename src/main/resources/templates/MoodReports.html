@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{header :: head(title='Mood Reports')}"></head>
+<body>
+<!-- Header / Navigation bar -->
+<div th:insert="~{header :: header-body}"></div>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Mood Reports</h2>
+
+    <!-- Overall distribution -->
+    <div class="mb-5">
+        <h4>Overall Distribution</h4>
+        <canvas id="pieChart" style="max-width:400px; display:block; margin:auto;"></canvas>
+    </div>
+
+    <!-- Time series -->
+    <div class="mb-5">
+        <h4>Entries Over Time</h4>
+        <canvas id="lineChart" style="max-width:600px; display:block; margin:auto;"></canvas>
+    </div>
+
+    <!-- Back button -->
+    <a th:href="@{/mood-tracker}" class="btn btn-primary">
+        ← Back to Tracker
+    </a>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+
+    const distribution = /*[[${distribution}]]*/ {};
+    const dailyData   = /*[[${dailyData}]]*/ [];
+
+    console.log('Mood distribution:', distribution);
+    console.log('Daily data:', dailyData);
+
+    // 3) PIE chart
+    const pieCanvas = document.getElementById('pieChart');
+    pieCanvas.style.height = '300px';
+    const pieCtx = pieCanvas.getContext('2d');
+    new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+            labels: Object.keys(distribution),
+            datasets: [{
+                data: Object.values(distribution)
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+
+    // 4) LINE chart
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    new Chart(lineCtx, {
+        type: 'line',
+        data: {
+            labels: dailyData.map(d => d.date),
+            datasets: [{
+                label: 'Entries',
+                data: dailyData.map(d => d.count),
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { display: true, title: { display: true, text: 'Date' } },
+                y: { display: true, title: { display: true, text: 'Count' }, beginAtZero: true }
+            }
+        }
+    });
+    /*]]>*/
+</script>
+
+<div class="footer">
+    <p>Digital Mental Health Platform - 2025</p>
+    <p style="font-weight: bold; font-style: italic;">If you are in crisis, having suicidal thoughts, or attempting suicide, contact emergency resources immediately.</p>
+</div>
+</body>
+</html>
