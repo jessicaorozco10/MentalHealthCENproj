@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-  <head th:insert="~{header :: head(title=Login)}"> </head>
-</head>
+<head th:insert="~{header :: head(title=Login)}"> </head>
 <body>
   <div th:insert="~{header :: header-body}">
   </div>
@@ -18,13 +16,12 @@
         <input id="password" name="password" type="password" class="form-control"/>
       </p>
       <p>
-        <a th:href="@{/user/forgot-password}" class="btn btn-link">Forgot Password?</a>
-
+        <a href="/user/forgot-password">Forgot Password?</a>
+      </p>
       <p>
-        <a th:href="@{/user/forgot-username}" class="btn btn-link">Forgot Username?</a>
+        <a href="/user/forgot-username">Forgot Username?</a>
       </p>
 
-      </p>
 
       <input type="submit" class="btn btn-primary" value="Submit"/>
     </form>
