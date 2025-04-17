@@ -157,12 +157,13 @@ public class UserController {
                                RedirectAttributes redirectAttributes) {
         boolean result = userService.resetPassword(token, password);
         if (result) {
-            redirectAttributes.addFlashAttribute("message", "Password reset successfully.");
-            return "redirect:/user/login";
+            return "user/reset-password-confirmation";
         } else {
             redirectAttributes.addFlashAttribute("error", "Invalid or expired token.");
             return "redirect:/user/reset-password?token=" + token;
         }
     }
+
+
 
 }
