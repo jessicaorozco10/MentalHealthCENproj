@@ -1,33 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:insert="~{header :: head(title=Mood-Tracker)}"> </head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{header :: head(title='Mood-Tracker')}"> </head>
 <body>
-    <!-- Header / Navigation bar -->
-    <div th:insert="~{header :: header-body}"></div>
+<!-- Header / Navigation bar -->
+<div th:insert="~{header :: header-body}"></div>
 
-    <div class="container">
-        <h2></br></br>Track Your Mood</br></br></h2>
-        <p>Log your mood daily to monitor patterns and improve your mental well-being.</p>
-        <form>
-            <label for="mood">Your Mood Today:</label>
-            <select id="mood" class="form-control">
-                <option>Happy</option>
-                <option>Sad</option>
-                <option>Stressed</option>
-                <option>Anxious</option>
-                <option>Neutral</option>
-            </select>
-            <br>
-            <button type="submit" class="btn btn-primary">Save Mood</button>
-        </form>
-    </div>
+<div class="container">
+    <h2 class="mt-4 mb-3">Track Your Mood</h2>
+    <p>Log your mood daily to monitor patterns and improve your mental well-being.</p>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>Digital Mental Health Platform - 2025</p>
-        <p style="font-weight: bold; font-style: italic;">If you are in crisis, having suicidal thoughts, or attempting suicide, contact emergency resources immediately.</p>
-    </div>
+    <!-- Flash message -->
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
 
-    <!-- Bootstrap CSS and javascript bundles -->
+    <form th:action="@{/mood-tracker}" method="post">
+        <!-- CSRF token -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        <label for="moodType" class="form-label">Your Mood Today:</label>
+        <select id="moodType" name="moodType" class="form-control mb-3">
+            <option value="HAPPY">Happy</option>
+            <option value="SAD">Sad</option>
+            <option value="STRESSED">Stressed</option>
+            <option value="ANXIOUS">Anxious</option>
+            <option value="NEUTRAL">Neutral</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Save Mood</button>
+    </form>
+
+    <a th:href="@{/mood-tracker/report}"
+       class="btn btn-secondary ml-3">
+        Generate Report
+    </a>
+</div>
+
+
+
+<!-- Footer -->
+<div class="footer">
+    <p>Digital Mental Health Platform - 2025</p>
+    <p style="font-weight: bold; font-style: italic;">If you are in crisis, having suicidal thoughts, or attempting suicide, contact emergency resources immediately.</p>
+</div>
+
+
+<!-- Bootstrap CSS and javascript bundles -->
 </body>
 </html>
