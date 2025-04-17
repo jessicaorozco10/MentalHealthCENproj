@@ -1,36 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:insert="~{header :: head(title='Contact Us')}"> </head>
 <body>
+
 <!-- Header / Navigation bar -->
+<!-- This section includes the header and navigation bar for the site. It is inserted using Thymeleaf to load a reusable header template. -->
 <div th:insert="~{header :: header-body}">
 </div>
 
-
+<!-- Contact form where users can submit their feedback -->
 <form action="/submit-feedback" method="post">
+    <!-- Name input field -->
+    <!-- The user is prompted to enter their name. The 'required' attribute ensures this field is not left empty. -->
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required />
     </div>
+
+    <!-- Email input field -->
+    <!-- The user is prompted to enter their email address. This field must be a valid email format, ensured by 'type="email". -->
     <div>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required />
     </div>
+
+    <!-- Message input field -->
+    <!-- A textarea is provided for the user to type their message. It includes a 'rows' attribute to specify the height. -->
     <div>
         <label for="message">Message:</label>
         <textarea id="message" name="message" rows="4" required></textarea>
     </div>
+
+    <!-- Submit button for the form -->
+    <!-- Once the form is filled, the user clicks this button to submit the feedback to the backend. -->
     <button type="submit">Submit Feedback</button>
 </form>
 
-
-<!-- Footer -->
+<!-- Footer with platform information and emergency contact message -->
 <div class="footer">
+    <!-- Platform branding and year of development -->
     <p>Digital Mental Health Platform - 2025</p>
+
+    <!-- A message in bold and italic, emphasizing the importance of contacting emergency services if in crisis. -->
     <p style="font-weight: bold; font-style: italic;">If you are in crisis, having suicidal thoughts, or attempting suicide, contact emergency resources immediately.</p>
 </div>
 
-<!-- Bootstrap CSS and javascript bundles -->
+<!-- Placeholder for Bootstrap CSS and JavaScript bundles to style the page (optional, not shown here) -->
 </body>
 </html>
