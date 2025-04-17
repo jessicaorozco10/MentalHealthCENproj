@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="https://www.thymeleaf.org">
+<head>
+  <head th:insert="~{header :: head(title='Schedule Appointment')}"> </head>
+</head>
+
+<body>
+<div th:insert="~{header :: header-body}">
+  <h3>Schedule Appointment</h3>
+
+  <form th:action="@{/appointments/schedule}" method="post">
+    <label for="therapistId">Therapist ID:</label>
+    <input type="number" id="therapistId" name="therapistId" required><br><br>
+
+    <label for="reason">Reason for Appointment:</label>
+    <input type="text" id="reason" name="reason" required><br><br>
+
+    <label for="scheduledTime">Time:</label>
+    <select name="scheduledTime" required>
+      <option value="2025-04-18T10:00">2025-04-18 10:00 AM</option>
+      <option value="2025-04-18T11:00">2025-04-18 11:00 AM</option>
+      <option value="2025-04-18T14:00">2025-04-18 2:00 PM</option>
+    </select><br><br>
+
+    <button type="submit">Book Appointment</button>
+  </form>
+</div>
+</body>
+</html>

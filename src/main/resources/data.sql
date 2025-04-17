@@ -19,3 +19,7 @@ values (6, 'Daniel', 'Herrera', '$2a$10$b.SaKCxJI0F5.JDppThxEOKqdTRnt4fsnnFxqITW
 insert or IGNORE into users (id, first_name, last_name, password, email, publication_date, user_type)
 values (7, 'Andres', 'Hernandez', '$2a$10$b.SaKCxJI0F5.JDppThxEOKqdTRnt4fsnnFxqITWaaqXtoA2EtIry',
         'Andres.Hernandez@fiu.edu', 1744516800000, 1);
+
+insert or IGNORE into users (id, first_name, last_name, password, email, publication_date, user_type)
+values (8, 'Peter', 'Clarke', '$2a$10$b.SaKCxJI0F5.JDppThxEOKqdTRnt4fsnnFxqITWaaqXtoA2EtIry',
+         'Peter.Clarke@email.com', 1744516800000, 1);

@@ -31,8 +31,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.FORWARD, DispatcherType.INCLUDE, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/about-us").authenticated()
                         .requestMatchers("/user/*").authenticated()
+                        .requestMatchers("/appointment").authenticated()
                         .anyRequest().permitAll()
                 ).formLogin(form -> {
                     form.loginPage("/user/login").permitAll();

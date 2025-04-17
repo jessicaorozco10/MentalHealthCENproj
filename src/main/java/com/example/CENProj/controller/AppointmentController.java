@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/appointments")
+@RequestMapping("/appointment")
 @RequiredArgsConstructor
 public class AppointmentController {
 
@@ -22,7 +22,7 @@ public class AppointmentController {
     private final UserServiceImpl userService;
 
 
-    @GetMapping("/schedule")
+    @GetMapping
     public String showScheduleForm(Model model) {
         model.addAttribute("appointment", new Appointment());
 
@@ -35,7 +35,7 @@ public class AppointmentController {
         );
         model.addAttribute("mockTimes", mockTimes);
 
-        return "appointments/form";
+        return "user/form";
     }
 
 }
