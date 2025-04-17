@@ -34,6 +34,7 @@ public class UserServiceImpl implements SecurityAdminService {
         return userRepository.findById(id);
     }
 
+
     public boolean delete(int id) {
         Optional<User> user = userRepository.findById(id);
         if(user.isEmpty()) return false;
@@ -144,6 +145,14 @@ public class UserServiceImpl implements SecurityAdminService {
         userRepository.save(user);
 
         passwordResetTokenRepository.delete(resetToken);
+        return true;
+    }
+
+    public boolean changePassword(User user, String password){
+        String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt());
+        user.setPassword(pw_hash);
+        this.userRepository.save(user);
+
         return true;
     }
 

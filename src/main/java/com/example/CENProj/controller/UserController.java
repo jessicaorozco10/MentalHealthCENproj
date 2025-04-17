@@ -85,6 +85,11 @@ public class UserController {
         return "user/login";
     }
 
+    @GetMapping("/reset-pass-confirmation")
+    public String reset(){
+        return "user/reset-pass-confirmation";
+    }
+
     @GetMapping("/account")
     public String showAccount(Model model) {
         List<User> users = this.userService.getAllUsers();
@@ -140,11 +145,39 @@ public class UserController {
     }
 
     @PostMapping("/forgot-password")
-    public String processForgotPassword(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
-        userService.initiateForgotPassword(email);
-        redirectAttributes.addFlashAttribute("message", "Reset link sent if account exists.");
-        return "redirect:/user/login";
+    public String processForgotPassword(@RequestParam("email") String email, @RequestParam("email-retype") String emailRetype, RedirectAttributes redirectAttributes) {
+      if (!email.equals(emailRetype)) return "redirect:/user/forgot-password";
+
+      User user =  userService.getUserByEmail(email);
+
+      if(user == null) return "redirect:/user/forgot-password";
+
+      redirectAttributes.addFlashAttribute("message", "Reset link sent if account exists.");
+        redirectAttributes.addFlashAttribute("user", user);
+
+        return "redirect:/user/forgot-password";
     }
+
+    @PostMapping("/forgot-password/create-password")
+    public String createForgotPassword(@RequestParam("password") String password,
+                                       @RequestParam("password-retype") String passwordRetype, RedirectAttributes redirectAttributes,
+                                       @RequestParam("id") int id) {
+
+        if (!password.equals(passwordRetype)) return "redirect:/user/forgot-password";
+
+        Optional<User> user =  userService.getUserById(id);
+
+        if(user.isEmpty()) return "redirect:/user/forgot-password";
+
+
+        userService.changePassword(user.get(), password);
+
+        redirectAttributes.addFlashAttribute("message", "Reset link sent if account exists.");
+        redirectAttributes.addFlashAttribute("user", user);
+
+        return "redirect:/user/reset-pass-confirmation";
+    }
+
 
     @GetMapping("/reset-password")
     public String showResetForm(@RequestParam("token") String token, Model model) {
