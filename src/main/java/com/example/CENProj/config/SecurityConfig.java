@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.FORWARD, DispatcherType.INCLUDE, DispatcherType.ERROR).permitAll()
                         .requestMatchers("/about-us").authenticated()
-                        .requestMatchers("/user/*").authenticated()
+                        .requestMatchers("/user/account").authenticated()
                         .anyRequest().permitAll()
                 ).formLogin(form -> {
                     form.loginPage("/user/login").permitAll();
