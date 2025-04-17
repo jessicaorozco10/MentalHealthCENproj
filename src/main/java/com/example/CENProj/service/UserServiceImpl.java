@@ -7,6 +7,7 @@ import com.example.CENProj.model.enums.UserType;
 import com.example.CENProj.repository.PasswordResetTokenRepository;
 import com.example.CENProj.repository.UserRepository;
 import com.example.CENProj.service.interfaces.SecurityAdminService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -146,5 +147,18 @@ public class UserServiceImpl implements SecurityAdminService {
         return true;
     }
 
+    @PostConstruct
+    public void initMockUser() {
+        if (userRepository.findByEmail("client@test.com") == null) {
+            User user = User.builder()
+                    .email("client@test.com")
+                    .firstName("Peter")
+                    .lastName("Clarke")
+                    .userType(UserType.CLIENT)
+                    .password(new BCryptPasswordEncoder().encode("test123"))
+                    .build();
+            userRepository.save(user);
+        }
+    }
 
 }
