@@ -20,6 +20,7 @@ public class UserRestController {
 
     private final UserServiceImpl userService;
 
+
     @ModelAttribute("loggedInUser")
     public User populateTypes() {
         try {

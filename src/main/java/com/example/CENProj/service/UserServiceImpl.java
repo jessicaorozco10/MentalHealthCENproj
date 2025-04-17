@@ -1,24 +1,29 @@
 package com.example.CENProj.service;
 
 import com.example.CENProj.model.Dto.UserCreatedDto;
-import com.example.CENProj.model.Dto.UserDto;
+import com.example.CENProj.model.PasswordResetToken;
 import com.example.CENProj.model.User;
 import com.example.CENProj.model.enums.UserType;
+import com.example.CENProj.repository.PasswordResetTokenRepository;
 import com.example.CENProj.repository.UserRepository;
 import com.example.CENProj.service.interfaces.SecurityAdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements SecurityAdminService {
     private final UserRepository userRepository;
+
 
     public List<User> getAllUsers(){
         return userRepository.findAll();
@@ -83,12 +88,63 @@ public class UserServiceImpl implements SecurityAdminService {
     }
 
     @Override
+    public void forgotPassword(String userId, String newData) {
+
+    }
+
+
+    @Override
     public void logSecurityEvent(String eventDetails) {
 
     }
 
     @Override
     public User getUserByEmail(String email) {
+
         return this.userRepository.findByEmail(email);
     }
+
+    @Override
+    public User forgotPassword(String email) {
+        return null;
+    }
+
+
+
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
+
+    public void initiateForgotPassword(String email) {
+        Optional<User> userOpt = Optional.ofNullable(userRepository.findByEmail(email));
+        if (userOpt.isEmpty()) return;
+
+        User user = userOpt.get();
+        String token = UUID.randomUUID().toString();
+
+        PasswordResetToken resetToken = new PasswordResetToken();
+        resetToken.setToken(token);
+        resetToken.setUser(user);
+        resetToken.setExpiration(LocalDateTime.now().plusMinutes(15));
+        passwordResetTokenRepository.save(resetToken);
+
+        String resetUrl = "http://localhost:8080/user/reset-password?token=" + token;
+        EmailService.send(email, "Password Reset Link", "Click to reset: " + resetUrl);
+    }
+
+    public boolean resetPassword(String token, String newPassword) {
+        Optional<PasswordResetToken> resetTokenOpt = passwordResetTokenRepository.findByToken(token);
+        if (resetTokenOpt.isEmpty()) return false;
+
+        PasswordResetToken resetToken = resetTokenOpt.get();
+        if (resetToken.getExpiration().isBefore(LocalDateTime.now())) return false;
+
+        User user = resetToken.getUser();
+        user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+        userRepository.save(user);
+
+        passwordResetTokenRepository.delete(resetToken);
+        return true;
+    }
+
+
 }

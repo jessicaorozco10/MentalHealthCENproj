@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CompositeTypeRegistration;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
@@ -35,4 +36,6 @@ public class User {
     private List<Discussion> discussions;
     @OneToMany(mappedBy = "createdByUser")
     private List<DiscussionComment> discussionComments;
+
+
 }

@@ -36,6 +36,9 @@ public class UserController {
 
     private final UserServiceImpl userService;
     private final SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+
+
+
     @PostMapping("/create")
     public RedirectView createUser(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password
             , @RequestParam(value = "firstname") String firstName, @RequestParam(value = "userType") String userType
@@ -130,4 +133,36 @@ public class UserController {
     public boolean VerifyLogin(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password){
         return true;
     }
+
+    @GetMapping("/forgot-password")
+    public String showForgotPasswordForm() {
+        return "user/forgot-password";
+    }
+
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+        userService.initiateForgotPassword(email);
+        redirectAttributes.addFlashAttribute("message", "Reset link sent if account exists.");
+        return "redirect:/user/login";
+    }
+
+    @GetMapping("/reset-password")
+    public String showResetForm(@RequestParam("token") String token, Model model) {
+        model.addAttribute("token", token);
+        return "user/reset-password";
+    }
+
+    @PostMapping("/reset-password")
+    public String processReset(@RequestParam("token") String token, @RequestParam("password") String password,
+                               RedirectAttributes redirectAttributes) {
+        boolean result = userService.resetPassword(token, password);
+        if (result) {
+            redirectAttributes.addFlashAttribute("message", "Password reset successfully.");
+            return "redirect:/user/login";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Invalid or expired token.");
+            return "redirect:/user/reset-password?token=" + token;
+        }
+    }
+
 }

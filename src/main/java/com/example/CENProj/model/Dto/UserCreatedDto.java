@@ -7,4 +7,11 @@ import lombok.Data;
 public class UserCreatedDto {
     private User user;
     private String errorMsg;
+
+    public void setErrorMsg(String emailAlreadyExists) {
+
+    }
+
+    public void setUser(User save) {
+    }
 }

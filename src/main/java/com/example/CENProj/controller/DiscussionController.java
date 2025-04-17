@@ -25,8 +25,10 @@ import java.util.Optional;
 @Controller
 @RequestMapping(path = "discussion")
 @RequiredArgsConstructor
+
 public class DiscussionController {
     private final DiscussionService discussionService;
+
 
     @ModelAttribute("loggedInUser")
     public User populateTypes() {
