@@ -18,4 +18,12 @@ public class UserDto extends User {
     public UserDto(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
+
+    public void setUser(com.example.CENProj.model.User user) {
+        this.user = user;
+    }
+
+    public com.example.CENProj.model.User getUser() {
+        return user;
+    }
 }

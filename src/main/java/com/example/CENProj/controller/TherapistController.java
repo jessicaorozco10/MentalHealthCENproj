@@ -22,6 +22,8 @@ import java.util.List;
 public class TherapistController {
     private final TherapistService therapistService;
 
+
+
     @GetMapping({"/",""})
     public String index(Model model) {
         return "find-therapists";

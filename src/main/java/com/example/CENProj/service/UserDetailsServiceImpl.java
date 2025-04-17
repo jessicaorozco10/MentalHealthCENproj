@@ -13,6 +13,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserServiceImpl userService;
 
+
+
     /**
     * Returns UserDetails object that will be used by the SecurityContext to authenticate current User.
     * Security context will make UserDetails object returned in this function throughout app to access said user.
@@ -25,4 +27,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         userDetails.setUser(user);
         return userDetails;
     }
+
 }

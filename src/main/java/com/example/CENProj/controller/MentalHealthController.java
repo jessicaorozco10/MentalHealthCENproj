@@ -20,6 +20,7 @@ public class MentalHealthController {
 
     private final UserServiceImpl userService;
 
+
     @ModelAttribute("loggedInUser")
     public User populateTypes() {
         try {
