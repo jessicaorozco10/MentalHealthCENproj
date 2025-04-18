@@ -1,10 +1,10 @@
 package com.example.CENProj.repository;
 
-import com.example.CENProj.model.Therapist;
+import com.example.CENProj.model.Availability;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TherapistRepository extends JpaRepository<Therapist, Integer> {
-    Therapist findByUserId(int id);
+public interface AvailabilityRepository extends JpaRepository<Availability, Integer> {
+
 }

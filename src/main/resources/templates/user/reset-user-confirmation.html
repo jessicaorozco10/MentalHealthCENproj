@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Username Recovery</title>
-</head>
+<head th:insert="~{header :: head(title='Reset User Confirmation')}"> </head>
 <body>
-<h2>Username Recovery Submitted</h2>
-<p>If your email was found, your username has been sent to your inbox.</p>
-<a th:href="@{/login}">Return to Login</a>
+    <!-- Header / Navigation bar -->
+    <div th:insert="~{header :: header-body}">
+    </div>
+    <h2>Username Recovery Submitted</h2>
+    <p th:if="${user}" th:text="'Your new email is: ' + ${user.email}"></p>
+    <p>If your email was found, your username has been sent to your inbox.</p>
+    <a th:href="@{/user/login}">Return to Login</a>
 </body>
 </html>

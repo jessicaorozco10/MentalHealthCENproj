@@ -33,6 +33,63 @@
           <option th:selected="${user.userType.name == 'ADMIN'}" value="ADMIN">Admin</option>
           <option th:selected="${user.userType.name == 'THERAPIST'}" value="THERAPIST">Therapist</option>
         </select>
+
+      </div>
+      <div th:if="${user.userType.name == 'THERAPIST'}">
+        <label class="form-label">Specialization</label>
+        <select th:disabled="${loggedInUser.userType.name != 'ADMIN'}" class="form-select" aria-label="User Type" name="specialization" form="editUserForm" required>
+          <option th:selected="${therapist} and ${therapist.therapist.specialization == 'Psychologist'}" value="Psychologist">Psychologist</option>
+          <option th:selected="${therapist} and ${therapist.therapist.specialization == 'Psychiatrist'}" value="Psychiatrist">Psychiatrist</option>
+          <option th:selected="${therapist} and ${therapist.therapist.specialization == 'Marriage/Family Therapy'}" value="Marriage/Family Therapy">Marriage/Family Therapy</option>
+          <option th:selected="${therapist} and ${therapist.therapist.specialization == 'Mental Health Counselor'}" value="Mental Health Counselor">Mental Health Counselor</option>
+        </select>
+        <label for="license-info" class="form-label">License Information</label>
+        <input th:value="${therapist} != null ? ${therapist.therapist.licenseInfo} : ''" id="license-info" type="text" name="license-info" class="form-control"/>
+        <label for="experience" class="form-label">Experience</label>
+        <input th:value="${therapist} != null ? ${therapist.therapist.experience} : ''" id="experience" type="number" name="experience" class="form-control"/>
+        <label class="form-label">Availability:</label>
+        <div class="form-check">
+          <input th:checked="${therapist} and ${therapist.monday}" class="form-check-input" type="checkbox" value="MONDAY" id="monday" name="monday">
+          <label class="form-check-label" for="monday">
+            Monday
+          </label>
+        </div>
+        <div class="form-check">
+          <input th:checked="${therapist} and ${therapist.tuesday}" class="form-check-input" type="checkbox" value="TUESDAY" id="tuesday" name="tuesday">
+          <label class="form-check-label" for="tuesday">
+            Tuesday
+          </label>
+        </div>
+        <div class="form-check">
+          <input th:checked="${therapist} and ${therapist.wednesday}" class="form-check-input" type="checkbox" value="WEDNESDAY" id="wednesday" name="wednesday">
+          <label class="form-check-label" for="wednesday">
+            Wednesday
+          </label>
+        </div>
+        <div class="form-check">
+          <input th:checked="${therapist} and ${therapist.thursday}" class="form-check-input" type="checkbox" value="THURSDAY" id="thursday" name="thursday">
+          <label class="form-check-label" for="thursday">
+            Thursday
+          </label>
+        </div>
+        <div class="form-check">
+          <input th:checked="${therapist} and ${therapist.friday}" class="form-check-input" type="checkbox" value="FRIDAY" id="friday" name="friday">
+          <label class="form-check-label" for="friday">
+            Friday
+          </label>
+        </div>
+        <div class="form-check">
+          <input th:checked="${therapist} and ${therapist.saturday}" class="form-check-input" type="checkbox" value="SATURDAY" id="saturday" name="saturday">
+          <label class="form-check-label" for="saturday">
+            Saturday
+          </label>
+        </div>
+        <div class="form-check">
+          <input th:checked="${therapist} and ${therapist.sunday}" class="form-check-input" type="checkbox" value="SUNDAY" id="sunday" name="sunday">
+          <label class="form-check-label" for="sunday">
+            Sunday
+          </label>
+        </div>
       </div>
       <input hidden="hidden" th:value="${user.id}" name="id" id="userId">
       <button type="submit" class="btn btn-primary" style="background-color: #3498db; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Edit User</button>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:insert="~{header :: head(title=Find-Therapists)}"> </head>
+<head th:insert="~{header :: head(title='Find-Therapists')}"> </head>
 <body>
     <!-- Header / Navigation bar -->
     <div th:insert="~{header :: header-body}">
@@ -9,8 +9,10 @@
     <div class="container">
         <h2></br></br>Find a Therapist</br></br></h2>
         <form class="form" id="findTherapistForm" th:action="@{/therapist/find}" method="post">
-            <label class="form-label" for="name">Name:</label>
-            <input class="form-control" type="text" id="name" name="name" placeholder="Enter Therapist Name">
+            <label class="form-label" for="first-name">First Name:</label>
+            <input class="form-control" type="text" id="first-name" name="first-name" placeholder="Enter Therapist First Name">
+            <label class="form-label" for="last-name">Last Name:</label>
+            <input class="form-control" type="text" id="last-name" name="last-name" placeholder="Enter Therapist Last Name">
 
             <label class="form-label" for="specialization">Specialization:</label>
             <select class="form-select" id="specialization" name="specialization" form="findTherapistForm">

@@ -20,18 +20,7 @@ public class UserRestController {
 
     private final UserServiceImpl userService;
 
-
-    @ModelAttribute("loggedInUser")
-    public User populateTypes() {
-        try {
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            Authentication authentication = securityContext.getAuthentication();
-            UserDto userDto = (UserDto) authentication.getPrincipal();
-            return userDto.getUser();
-        } catch (Exception ignored) {}
-        return null;
-    }
-
+    // Handles deleting user
     @DeleteMapping("/delete")
     public boolean Delete(@RequestParam(value = "id") int id) {
        return this.userService.delete(id);

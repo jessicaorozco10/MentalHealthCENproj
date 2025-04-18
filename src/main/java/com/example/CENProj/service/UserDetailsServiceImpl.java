@@ -18,7 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     /**
     * Returns UserDetails object that will be used by the SecurityContext to authenticate current User.
     * Security context will make UserDetails object returned in this function throughout app to access said user.
-    *
+    * Fetches User for login from our database
     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

@@ -6,6 +6,10 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
+/* Extends Spring securit user class to include local project user
+* This user will be available through the program when we get the security context
+* Helps track logged-in user
+* */
 @Setter
 @Getter
 public class UserDto extends User {

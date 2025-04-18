@@ -1,11 +1,13 @@
 package com.example.CENProj.controller;
 
 import com.example.CENProj.model.Appointment;
+import com.example.CENProj.model.Dto.UserDto;
 import com.example.CENProj.model.User;
 import com.example.CENProj.service.AppointmentService;
 import com.example.CENProj.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,16 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
     private final UserServiceImpl userService;
 
+    @ModelAttribute("loggedInUser")
+    public User populateTypes() {
+        try {
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            Authentication authentication = securityContext.getAuthentication();
+            UserDto userDto = (UserDto) authentication.getPrincipal();
+            return userDto.getUser();
+        } catch (Exception ignored) {}
+        return null;
+    }
 
     @GetMapping("/schedule")
     public String showScheduleForm(Model model) {

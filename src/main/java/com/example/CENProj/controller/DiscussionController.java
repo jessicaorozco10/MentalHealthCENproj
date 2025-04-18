@@ -41,6 +41,9 @@ public class DiscussionController {
         return null;
     }
 
+    /* shows community forums/discussion page and gets all the discussions from discussionService
+     *  shows create post form
+     */
     @GetMapping("")
     public String index(Model model) {
         List<Discussion> discussions = this.discussionService.getAllDiscussions();
@@ -48,6 +51,7 @@ public class DiscussionController {
         return "discussion/index";
     }
 
+    // shows the discussion being viewed, returns discussion from discussionService
     @GetMapping({"/view/{id}/", "/view/{id}"})
     public String getDiscussionById(@PathVariable(value = "id")int id, Model model) {
         Optional<Discussion> discussionOptional = this.discussionService.getDiscussionById(id);
@@ -56,6 +60,7 @@ public class DiscussionController {
         return "discussion/view";
     }
 
+    // Handles creating a post, redirects and shows it on discussion page
     @PostMapping("/")
     public RedirectView createPost(@RequestParam(value = "title")String title, @RequestParam(value = "content") String content,
                                     RedirectAttributes redirectAttributes) {
@@ -73,8 +78,9 @@ public class DiscussionController {
         return new RedirectView("/discussion");
     }
 
+    // Handles making a comment and redirects you to the post you commented under
     @PostMapping("/comment/")
-    public RedirectView createPost(@RequestParam(value = "comment") String comment, @RequestParam(value = "id") int discussionId,
+    public RedirectView createComment(@RequestParam(value = "comment") String comment, @RequestParam(value = "id") int discussionId,
                                    RedirectAttributes redirectAttributes) {
         try {
             SecurityContext securityContext = SecurityContextHolder.getContext();
