@@ -12,5 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TherapistViewModel {
     private Therapist therapist;
-    private String therapistAvailability;
+    private boolean monday;
+    private boolean tuesday;
+    private boolean wednesday;
+    private boolean thursday;
+    private boolean friday;
+    private boolean saturday;
+    private boolean sunday;
 }

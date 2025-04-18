@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:insert="~{header :: head(title='Forgot Username')}"> </head>
+<body>
+<div th:insert="~{header :: header-body}"></div>
+<h2> Forgot Your Username/Email? </h2>
+
+<p> Enter your First Name and Last Name below, and we'll send you a link to reset your email. </p>
+
+<form th:action="@{/user/forgot-username}" method="post">
+  <label for="firstName">First Name:</label>
+  <input type="text" id="firstName" name="firstName" required>
+  <label for="lastName">Last Name:</label>
+  <input type="text" id="lastName" name="lastName" required>
+  <br><br>
+  <button type="submit">Send Reset Link</button>
+</form>
+
+<div th:if="${message}">
+  <p th:text="${message}" style="color: green;"></p>
+</div>
+
+<div th:if="${user}">
+  <p th:text="'Your username/email is: ' + ${user.email}" style="color: green;"></p>
+  <p style="color: green;">You can change your username/email below</p>
+  <form th:action="@{/user/reset-username}" method="post">
+    <label for="email">New Email:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="confirm-email">Confirm Email:</label>
+    <input type="email" id="confirm-email" name="confirm-email" required>
+    <br><br>
+    <input type="number" id="user-id" name="user-id" th:value="${user.id}" hidden required>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+</body>
+</html>

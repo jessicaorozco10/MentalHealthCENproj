@@ -26,12 +26,14 @@ public class DiscussionService {
         return this.discussionRepository.findById(id);
     }
 
+    // creates discussion and saves it to database
     public Discussion createDiscussion(String title, String content, User user) {
         Discussion discussion = Discussion.builder().title(title).createdByUser(user)
                 .createdDate(LocalDateTime.now()).content(content).build();
         return this.discussionRepository.save(discussion);
     }
 
+    // creates comment and saves it to database
     public DiscussionComment createComment(String content, int discussionId, User user) {
         Optional<Discussion> discussion = this.discussionRepository.findById(discussionId);
         if(discussion.isEmpty()) return null;

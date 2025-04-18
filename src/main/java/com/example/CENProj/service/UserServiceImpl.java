@@ -7,7 +7,6 @@ import com.example.CENProj.model.enums.UserType;
 import com.example.CENProj.repository.PasswordResetTokenRepository;
 import com.example.CENProj.repository.UserRepository;
 import com.example.CENProj.service.interfaces.SecurityAdminService;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -25,13 +24,16 @@ import java.util.UUID;
 public class UserServiceImpl implements SecurityAdminService {
     private final UserRepository userRepository;
 
-
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
 
     public Optional<User> getUserById(int id){
         return userRepository.findById(id);
+    }
+
+    public User getUserByName(String firstName, String lastName){
+        return this.userRepository.findByFirstNameAndLastName(firstName, lastName);
     }
 
     public boolean delete(int id) {
@@ -41,6 +43,7 @@ public class UserServiceImpl implements SecurityAdminService {
         return true;
     }
 
+    // creates user and saves it to database
     public UserCreatedDto createUser(String email, String password, String firstName, String lastName, UserType userType) {
         UserCreatedDto userCreatedDto = new UserCreatedDto();
         User userWithExistingEmail = this.userRepository.findByEmail(email);
@@ -55,6 +58,7 @@ public class UserServiceImpl implements SecurityAdminService {
         return userCreatedDto;
     }
 
+    // updates user in database
     public User updateUser(int id, String email, String firstName, String lastName, UserType userType) {
         Optional<User> userById = this.userRepository.findById(id);
         User userAlreadyWithEmail = this.userRepository.findByEmail(email);
@@ -71,6 +75,11 @@ public class UserServiceImpl implements SecurityAdminService {
         user.setUserType(userType);
         this.userRepository.save(user);
         return user;
+    }
+
+    public User changeEmail(User user, String email) {
+        user.setEmail(email);
+        return userRepository.save(user);
     }
 
     @Override
@@ -147,18 +156,5 @@ public class UserServiceImpl implements SecurityAdminService {
         return true;
     }
 
-    @PostConstruct
-    public void initMockUser() {
-        if (userRepository.findByEmail("client@test.com") == null) {
-            User user = User.builder()
-                    .email("client@test.com")
-                    .firstName("Peter")
-                    .lastName("Clarke")
-                    .userType(UserType.CLIENT)
-                    .password(new BCryptPasswordEncoder().encode("test123"))
-                    .build();
-            userRepository.save(user);
-        }
-    }
 
 }
